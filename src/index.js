@@ -9,6 +9,10 @@ app.use(bodyParser.json());
 
 app.use("/tasks", tasksRouter);
 
+app.use("/", (req, res) => {
+  res.status(404).send("404 Not Found!");
+});
+
 const { PORT } = process.env;
 
 app.listen(PORT, () => {
