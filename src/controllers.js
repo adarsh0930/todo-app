@@ -18,7 +18,26 @@ async function getTasks(req, res) {
 }
 
 async function createTask(req, res) {
-  res.send();
+  const { title, description } = req.body;
+  if (!title || !description) {
+    return res
+      .status(400)
+      .json({ message: "Title and description are required" });
+  }
+
+  const tasks = await readTasks();
+  const newTask = {
+    id: tasks.length ? tasks[tasks.length - 1].id + 1 : 1,
+    title: req.body.title,
+    description: req.body.description,
+    completed: false,
+    createdAt: new Date(),
+    updatedAt: new Date(),
+    isDeleted: false,
+  };
+  tasks.push(newTask);
+  await writeTasks(tasks);
+  res.status(201).json(newTask);
 }
 
 async function updateTask(req, res) {
