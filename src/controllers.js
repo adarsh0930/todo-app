@@ -45,7 +45,17 @@ async function updateTask(req, res) {
 }
 
 async function deleteTask(req, res) {
-  res.send();
+  const tasks = await readTasks();
+
+  const taskToDelete = tasks.find((task) => task.id == req.params.id);
+  if (!taskToDelete) {
+    return res.status(404).json({ message: "Task not found" });
+  }
+
+  taskToDelete.isDeleted = true;
+
+  await writeTasks(tasks);
+  res.send(taskToDelete);
 }
 
 module.exports = {
