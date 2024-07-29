@@ -1,5 +1,14 @@
 const { readTasks, writeTasks } = require("./db");
 
+function formatTask(task) {
+  return {
+    id: task.id,
+    title: task.title,
+    description: task.description,
+    completed: task.completed,
+  };
+}
+
 async function getTaskById(req, res) {
   const tasks = await readTasks();
   const currentTasks = tasks.filter((task) => task.isDeleted == false);
@@ -8,13 +17,13 @@ async function getTaskById(req, res) {
     return res.status(404).json({ message: "Task not found" });
   }
 
-  res.json(task);
+  res.json(formatTask(task));
 }
 
 async function getTasks(req, res) {
   const tasks = await readTasks();
   const currentTasks = tasks.filter((task) => task.isDeleted == false);
-  res.json(currentTasks);
+  res.json(currentTasks.map(formatTask));
 }
 
 async function createTask(req, res) {
@@ -37,7 +46,7 @@ async function createTask(req, res) {
   };
   tasks.push(newTask);
   await writeTasks(tasks);
-  res.status(201).json(newTask);
+  res.status(201).json(formatTask(newTask));
 }
 
 async function updateTask(req, res) {
@@ -54,7 +63,7 @@ async function updateTask(req, res) {
   };
 
   await writeTasks(tasks);
-  res.json(tasks[taskIndex]);
+  res.json(formatTask(tasks[taskIndex]));
 }
 
 async function deleteTask(req, res) {
@@ -68,7 +77,7 @@ async function deleteTask(req, res) {
   taskToDelete.isDeleted = true;
 
   await writeTasks(tasks);
-  res.send(taskToDelete);
+  res.send(formatTask(taskToDelete));
 }
 
 module.exports = {
