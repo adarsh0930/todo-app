@@ -41,7 +41,20 @@ async function createTask(req, res) {
 }
 
 async function updateTask(req, res) {
-  res.send();
+  const tasks = await readTasks();
+  const taskIndex = tasks.findIndex((task) => task.id == req.params.id);
+  if (taskIndex === -1) {
+    return res.status(404).json({ message: "Task not found" });
+  }
+
+  tasks[taskIndex] = {
+    ...tasks[taskIndex],
+    ...req.body,
+    updatedAt: new Date(),
+  };
+
+  await writeTasks(tasks);
+  res.json(tasks[taskIndex]);
 }
 
 async function deleteTask(req, res) {
