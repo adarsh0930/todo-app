@@ -50,6 +50,12 @@ async function createTask(req, res) {
 }
 
 async function updateTask(req, res) {
+  if (req.body.completed && typeof req.body.completed !== "boolean") {
+    return res
+      .status(400)
+      .json({ message: "Task completed property must be a boolean" });
+  }
+
   const tasks = await readTasks();
   const taskIndex = tasks.findIndex((task) => task.id == req.params.id);
   if (taskIndex === -1) {
