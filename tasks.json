@@ -1,1 +1,29 @@
-[]
+[
+  {
+    "id": 1,
+    "title": "Create a ToDo List App",
+    "description": "It's an assignment for the Backend Development Internship role at HELPSTiR",
+    "completed": true,
+    "createdAt": "2024-07-29T11:27:38.085Z",
+    "updatedAt": "2024-07-29T12:54:28.981Z",
+    "isDeleted": false
+  },
+  {
+    "id": 2,
+    "title": "Clean laptop screen",
+    "description": "Clean your laptop screen properly.",
+    "completed": false,
+    "createdAt": "2024-07-29T11:29:22.312Z",
+    "updatedAt": "2024-07-29T11:29:22.312Z",
+    "isDeleted": false
+  },
+  {
+    "id": 3,
+    "title": "Eat Fruit",
+    "description": "Eat a seasonal fruit",
+    "completed": false,
+    "createdAt": "2024-07-29T14:46:54.474Z",
+    "updatedAt": "2024-07-29T14:46:54.474Z",
+    "isDeleted": true
+  }
+]
